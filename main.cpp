@@ -57,12 +57,6 @@ void outputans(){
 }
 
 void possible_num (int y, int x, bool possible[]) {
-    typedef struct Case {
-        int xfrom;
-        int yfrom;
-        int xto;
-        int yto;
-    }Case;
     for(int i=1;i<=9;i++) possible[i] = true; 
     for(int i=0;i<9;i++) {  //같은 행에 있는 수 찾기
         int fillnum = sudoku[y][i];
@@ -73,33 +67,12 @@ void possible_num (int y, int x, bool possible[]) {
         possible[fillnum] = false;
     }
     //3*3 섹터 있는 수 찾기
-    Case cc[9];
-    cc[0].xfrom=0; cc[0].xto=2;
-    cc[0].yfrom=0; cc[0].yto=2;
-    cc[1].xfrom=3; cc[1].xto=5;
-    cc[1].yfrom=0; cc[1].yto=2;
-    cc[2].xfrom=6; cc[2].xto=8;
-    cc[2].yfrom=0; cc[2].yto=2;
-    cc[3].xfrom=0; cc[3].xto=2;
-    cc[3].yfrom=3; cc[3].yto=5;
-    cc[4].xfrom=3; cc[4].xto=5;
-    cc[4].yfrom=3; cc[4].yto=5;
-    cc[5].xfrom=6; cc[5].xto=8;
-    cc[5].yfrom=3; cc[5].yto=5;
-    cc[6].xfrom=0; cc[6].xto=2;
-    cc[6].yfrom=6; cc[6].yto=8;
-    cc[7].xfrom=3; cc[7].xto=5;
-    cc[7].yfrom=6; cc[7].yto=8;
-    cc[8].xfrom=6; cc[8].xto=8;
-    cc[8].yfrom=6; cc[8].yto=8;
+    int yto = y / 3 * 3;
+    int xto = x / 3 * 3;
 
-    for(int k=0;k<9;k++){
-        if((y >= cc[k].yfrom && y<=cc[k].yto) && (x>=cc[k].xfrom && x<=cc[k].xto)){
-            for(int i=cc[k].yfrom;i<=cc[k].yto;i++){
-                for(int j=cc[k].xfrom;j<=cc[k].xto;j++){
-                    possible[sudoku[i][j]] = false;
-                }
-            }
+    for(int i=yto;i<yto+3;i++) {
+        for(int j=xto;j<xto + 3;j++){
+            possible[sudoku[i][j]] = false;
         }
     }
 }
@@ -107,8 +80,8 @@ void possible_num (int y, int x, bool possible[]) {
 void recursion(int now) {
     if(now >= jump.size()){
         //출력후 프로그램 종료.
-        //output();
-        outputans();
+        output();
+        //outputans();
         exit(0);
     }
     int y,x;

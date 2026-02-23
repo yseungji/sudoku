@@ -9,7 +9,7 @@ void possible_num (int y, int x, bool possible[]);
 void output();
 void recursion(int now);
 bool ans = false;
-
+void outputans();
 int main()
 {
 	ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
@@ -24,6 +24,7 @@ int main()
     }
 
     recursion(0); //매개변수로 now 현재 순서
+    
     return 0;
 }
 
@@ -47,6 +48,12 @@ void output() {
         cout << '\n';
     }
     cout << '\n';
+}
+
+void outputans(){
+    for(int i=0;i<jump.size();i++){
+        cout << sudoku[jump[i].first][jump[i].second];
+    }
 }
 
 void possible_num (int y, int x, bool possible[]) {
@@ -100,7 +107,8 @@ void possible_num (int y, int x, bool possible[]) {
 void recursion(int now) {
     if(now >= jump.size()){
         //출력후 프로그램 종료.
-        output();
+        //output();
+        outputans();
         exit(0);
     }
     int y,x;
@@ -113,38 +121,10 @@ void recursion(int now) {
     for(int i=1;i<=9;i++){
         if(possible[i] == true) {
             sudoku[y][x] = i;
-            //output();
             recursion(now+1);
-            sudoku[y][x] = 0;
         }
     }
     sudoku[y][x] = 0;
     
-    
-    
     return;
 }
-
-
-//예제
-/*
-000000000
-000000000
-000000000
-000000000
-000000000
-000000000
-000000000
-000000000
-000000000
-
-100000000
-000000000
-000000000
-000000000
-000000000
-000000000
-000000000
-000000000
-000000000
-*/
